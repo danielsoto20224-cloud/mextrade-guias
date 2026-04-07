@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Mextrade">
+<meta name="theme-color" content="#303030">
+<title>Mextrade Guías</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{--red:#B00000;--dark:#303030;--gray:#707070}
+html,body{height:100%;background:#f5f5f5}
+body{font-family:Arial,Helvetica,sans-serif;overscroll-behavior:none}
+.app{max-width:480px;margin:0 auto;background:#fff;min-height:100vh;min-height:-webkit-fill-available;display:flex;flex-direction:column}
+.header{background:var(--dark)}
+.hbar{background:var(--red);height:5px}
+.hcont{padding:13px 16px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:20px;font-weight:900;color:#fff;letter-spacing:1px}
+.logo span{color:var(--red)}
+.rbadge{background:rgba(255,255,255,0.15);border-radius:20px;padding:4px 12px;font-size:12px;color:#fff;cursor:pointer;user-select:none}
+.tabs{display:flex;background:#fff;border-bottom:2px solid #f0f0f0;position:sticky;top:0;z-index:10}
+.tab{flex:1;padding:12px 4px;text-align:center;font-size:12px;font-weight:700;color:var(--gray);cursor:pointer;border-bottom:3px solid transparent;transition:.2s;white-space:nowrap;user-select:none}
+.tab.active{color:var(--red);border-bottom-color:var(--red)}
+.nbadge{background:var(--red);color:#fff;border-radius:50%;width:17px;height:17px;font-size:9px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;margin-left:3px;vertical-align:middle}
+.content{flex:1;padding:14px;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.sec{display:none}.sec.active{display:block}
+.card{background:#fff;border:1px solid #e8e8e8;border-radius:10px;overflow:hidden;margin-bottom:10px;cursor:pointer;transition:.2s;-webkit-tap-highlight-color:rgba(176,0,0,.08)}
+.card:active{border-color:var(--red)}
+.card-hd{background:var(--dark);padding:9px 13px;display:flex;justify-content:space-between;align-items:center}
+.card-id{font-size:13px;font-weight:700;color:#fff}
+.sbadge{font-size:10px;padding:3px 8px;border-radius:10px;font-weight:700}
+.sp{background:#fff3cd;color:#856404}
+.se{background:#d4edda;color:#155724}
+.sv{background:#cce5ff;color:#004085}
+.card-bd{padding:11px 13px}
+.row{display:flex;justify-content:space-between;margin-bottom:4px;gap:8px}
+.rl{font-size:10px;color:var(--gray);text-transform:uppercase;white-space:nowrap}
+.rv{font-size:12px;color:var(--dark);font-weight:700;text-align:right}
+.rdest{font-size:12px;color:var(--red);font-weight:700;margin-top:5px}
+.gtag{margin-top:6px;font-size:11px;color:#155724;background:#d4edda;padding:3px 9px;border-radius:5px;font-weight:700;display:inline-block}
+.inp{border:1px solid #ddd;border-radius:8px;padding:11px 12px;font-size:15px;color:var(--dark);outline:none;width:100%;background:#fff;-webkit-appearance:none;appearance:none}
+.inp:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(176,0,0,.1)}
+select.inp{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23707070' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
+.lbl{font-size:11px;color:var(--gray);font-weight:700;text-transform:uppercase;display:block;margin-bottom:5px;letter-spacing:.3px}
+.fg{margin-bottom:12px}
+.btn{width:100%;padding:13px;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;transition:.15s;margin-bottom:8px;letter-spacing:.3px;-webkit-appearance:none}
+.br{background:var(--red);color:#fff}
+.br:active{background:#900000}
+.bd{background:var(--dark);color:#fff}
+.bo{background:#fff;color:var(--red);border:2px solid var(--red)}
+.btn:active{transform:scale(.97)}
+.sbox{border:2px dashed var(--red);border-radius:12px;padding:24px 14px;text-align:center;background:#fff8f8;cursor:pointer;margin-bottom:12px;transition:.15s}
+.sbox:active{background:#fff0f0}
+.sicon{font-size:36px;margin-bottom:6px}
+.st{font-size:14px;font-weight:700;color:var(--dark);margin-bottom:3px}
+.ss{font-size:12px;color:var(--gray)}
+.ncrd{background:#fff;border:1px solid #e8e8e8;border-radius:10px;overflow:hidden;margin-bottom:10px}
+.ncrd.nw{border-color:var(--red);animation:pulse 1.2s ease-out}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(176,0,0,.3)}100%{box-shadow:0 0 0 10px rgba(176,0,0,0)}}
+.nhd{background:var(--dark);padding:9px 13px;display:flex;justify-content:space-between;align-items:center}
+.nid{font-size:13px;font-weight:700;color:#fff}
+.nts{font-size:10px;color:#aaa}
+.nbd{padding:12px 13px}
+.ngrid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:10px}
+.ni .nl{font-size:10px;color:var(--gray);text-transform:uppercase}
+.ni .nv{font-size:12px;color:var(--dark);font-weight:700}
+.gbox{background:#f8f8f8;border-radius:8px;padding:10px 12px;display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.gnum{font-size:15px;font-weight:700;color:var(--red);letter-spacing:1px;flex:1}
+.syncbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.sinfo{font-size:11px;color:var(--gray)}
+.sbtn{background:#fff;border:1px solid var(--red);color:var(--red);border-radius:6px;padding:6px 13px;font-size:11px;font-weight:700;cursor:pointer}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--dark);color:#fff;padding:11px 20px;border-radius:10px;font-size:13px;font-weight:700;text-align:center;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap;max-width:90vw}
+.toast.show{opacity:1}
+.tok{background:#155724}.terr{background:var(--red)}
+.loading{text-align:center;padding:40px;color:var(--gray);font-size:13px}
+.spin{display:inline-block;width:20px;height:20px;border:2px solid #ddd;border-top-color:var(--red);border-radius:50%;animation:sp .8s linear infinite;margin-right:8px;vertical-align:middle}
+@keyframes sp{to{transform:rotate(360deg)}}
+.empty{text-align:center;padding:40px 16px}
+.ei{font-size:46px;margin-bottom:10px}
+.et{font-size:15px;font-weight:700;color:var(--dark);margin-bottom:4px}
+.es{font-size:13px;color:var(--gray)}
+.rsel{padding:20px 14px}
+.rbtn{background:#fff;border:2px solid #e8e8e8;border-radius:14px;padding:18px;margin-bottom:12px;cursor:pointer;display:flex;align-items:center;gap:14px;width:100%;text-align:left;transition:.2s;-webkit-tap-highlight-color:rgba(176,0,0,.08)}
+.rbtn:active{border-color:var(--red)}
+.ric{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.ri h3{font-size:15px;font-weight:700;color:var(--dark);margin-bottom:3px}
+.ri p{font-size:12px;color:var(--gray)}
+.cfgbox{background:#fff;border:1px solid #e8e8e8;border-radius:10px;padding:14px;margin-bottom:12px}
+.cfgbox h3{font-size:11px;font-weight:700;color:var(--dark);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+.ok-box{font-size:12px;color:#155724;background:#d4edda;border-radius:6px;padding:9px 12px;margin-bottom:10px;font-weight:700}
+.camprev{display:none;margin-bottom:10px;border-radius:10px;overflow:hidden;border:2px solid var(--dark)}
+.camprev video{width:100%;display:block}
+.cambts{display:none;gap:8px;margin-bottom:10px}
+.cambts .btn{flex:1;margin:0;padding:11px}
+.photo-prev{width:100%;border-radius:8px;border:2px solid var(--red);display:block;margin-bottom:8px}
+.install-banner{background:var(--dark);color:#fff;padding:12px 16px;font-size:12px;display:flex;align-items:center;gap:10px;cursor:pointer}
+.install-banner span{flex:1}
+.install-banner button{background:var(--red);color:#fff;border:none;border-radius:6px;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap}
+</style>
+</head>
+<body>
+
+<div id="installBanner" class="install-banner" style="display:none">
+  <span>📱 Agrega esta app a tu pantalla de inicio</span>
+  <button onclick="installApp()">Instalar</button>
+  <span onclick="$('installBanner').style.display='none'" style="flex:0;font-size:18px;cursor:pointer">✕</span>
+</div>
+
+<div class="app">
+  <div class="header">
+    <div class="hbar"></div>
+    <div class="hcont">
+      <div class="logo">MEX<span>TRADE</span></div>
+      <div class="rbadge" id="rbadge" onclick="changeRole()">Selecciona rol</div>
+    </div>
+  </div>
+  <div id="toastEl" class="toast"></div>
+  <div id="main" style="flex:1;display:flex;flex-direction:column"></div>
+</div>
+
+<canvas id="capCv" style="display:none"></canvas>
+
+<script>
+const API = "https://script.google.com/macros/s/AKfycbyrw3X4eo50btbtN41aUFED8NJcOo6B5oRw9pw9dIWYMsryYgIg7q_qrvQhYHYq3hj5fw/exec";
+
+let S = {
+  role: null,
+  pedidos: [],
+  notifs: [],
+  chofer: localStorage.getItem('mxt_ch') || '',
+  vs: null,
+  photo: null,
+  timer: null,
+  deferredPrompt: null
+};
+
+const $ = id => document.getElementById(id);
+
+/* ── PWA Install ── */
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  S.deferredPrompt = e;
+  $('installBanner').style.display = 'flex';
+});
+function installApp() {
+  if (S.deferredPrompt) {
+    S.deferredPrompt.prompt();
+    S.deferredPrompt.userChoice.then(() => {
+      S.deferredPrompt = null;
+      $('installBanner').style.display = 'none';
+    });
+  }
+}
+
+/* ── Toast ── */
+function toast(m, t = '', d = 2800) {
+  const el = $('toastEl');
+  el.textContent = m;
+  el.className = 'toast show ' + (t === 'ok' ? 'tok' : t === 'err' ? 'terr' : '');
+  setTimeout(() => el.className = 'toast', d);
+}
+
+/* ── API ── */
+async function get(action) {
+  const r = await fetch(`${API}?action=${action}`);
+  return r.json();
+}
+async function post(body) {
+  const r = await fetch(API, { method: 'POST', body: JSON.stringify(body) });
+  return r.json();
+}
+
+/* ── Sync ── */
+async function sync() {
+  try {
+    const d = await get('getPedidos');
+    if (Array.isArray(d)) {
+      S.pedidos = d;
+      d.filter(p => p.guia && !S.notifs.find(n => n.guia === p.guia))
+       .forEach(p => S.notifs.unshift({ ...p, _new: true }));
+      return true;
+    }
+  } catch (e) {}
+  return false;
+}
+
+/* ── Router ── */
+function main() {
+  if (!S.role) { roleScreen(); return; }
+  S.role === 'chofer' ? choferScreen() : vendedorScreen();
+}
+
+/* ── Role Screen ── */
+function roleScreen() {
+  $('rbadge').textContent = 'Selecciona rol';
+  $('main').innerHTML = `
+  <div class="rsel">
+    <p style="font-size:18px;font-weight:700;color:#303030;text-align:center;margin-bottom:5px">¿Quién eres?</p>
+    <p style="font-size:13px;color:#707070;text-align:center;margin-bottom:18px">Selecciona tu rol para continuar</p>
+    <button class="rbtn" onclick="setRole('chofer')">
+      <div class="ric" style="background:#fff3f3">🚛</div>
+      <div class="ri"><h3>Chofer / Paquetería</h3><p>Registro guías y tomo fotos de envíos</p></div>
+    </button>
+    <button class="rbtn" onclick="setRole('vendedor')">
+      <div class="ric" style="background:#f3fff3">💼</div>
+      <div class="ri"><h3>Vendedor</h3><p>Recibo guías escaneadas en tiempo real</p></div>
+    </button>
+    <div class="cfgbox" style="margin-top:16px">
+      <h3>Mi nombre (chofer)</h3>
+      <div class="fg"><input class="inp" id="chNom" placeholder="Ej: Juan Pérez" value="${S.chofer}"></div>
+      <button class="btn bo" onclick="saveNom()">Guardar nombre</button>
+    </div>
+    <div class="cfgbox">
+      <h3>Conexión</h3>
+      <div class="ok-box">✓ API conectada · Notificaciones a csoto@mextradeint.com</div>
+    </div>
+  </div>`;
+}
+
+function saveNom() {
+  const v = $('chNom')?.value?.trim();
+  if (v) { S.chofer = v; localStorage.setItem('mxt_ch', v); }
+  toast('Guardado ✓', 'ok', 1400);
+}
+
+async function setRole(r) {
+  S.role = r;
+  $('rbadge').textContent = r === 'chofer' ? '🚛 Chofer' : '💼 Vendedor';
+  $('main').innerHTML = `<div class="loading"><span class="spin"></span>Conectando con Sheet...</div>`;
+  await sync();
+  main();
+  if (r === 'vendedor') autoRefresh();
+}
+
+function autoRefresh() {
+  if (S.timer) clearInterval(S.timer);
+  S.timer = setInterval(async () => {
+    await sync();
+    const nl = $('nlist'); if (nl) nl.innerHTML = notifCards();
+    const si = $('vsi'); if (si) si.textContent = 'Actualizado: ' + new Date().toLocaleTimeString('es-MX', { hour12: false });
+  }, 15000);
+}
+
+/* ── Chofer Screen ── */
+function choferScreen() {
+  const pend = S.pedidos.filter(p => p.status === 'pendiente').length;
+  $('main').innerHTML = `
+  <div class="tabs">
+    <div class="tab active" id="tc1" onclick="sw('cP','tc1')">Pedidos${pend ? `<span class="nbadge">${pend}</span>` : ''}</div>
+    <div class="tab" id="tc2" onclick="sw('cS','tc2')">Escanear</div>
+    <div class="tab" id="tc3" onclick="sw('cN','tc3')">+ Pedido</div>
+    <div class="tab" id="tc4" onclick="sw('cC','tc4')">⚙</div>
+  </div>
+  <div class="content">
+    <div class="sec active" id="cP">
+      <div class="syncbar">
+        <span class="sinfo" id="csi">Sheet conectado · ${S.pedidos.length} pedidos</span>
+        <button class="sbtn" onclick="rChofer()">🔄 Sync</button>
+      </div>
+      <div id="clist">${pedidoCards()}</div>
+    </div>
+    <div class="sec" id="cS">${scanForm()}</div>
+    <div class="sec" id="cN">${nuevoForm()}</div>
+    <div class="sec" id="cC">${cfgChofer()}</div>
+  </div>`;
+}
+
+function pedidoCards() {
+  if (!S.pedidos.length) return `<div class="empty"><div class="ei">📦</div><p class="et">Sin pedidos</p><p class="es">Sincroniza con el Sheet</p></div>`;
+  return S.pedidos.map(p => `
+  <div class="card" onclick="selPed('${p.id}')">
+    <div class="card-hd">
+      <span class="card-id">📦 ${p.id}</span>
+      <span class="sbadge ${p.status === 'escaneado' ? 'se' : p.status === 'enviado' ? 'sv' : 'sp'}">${p.status === 'escaneado' ? '✓ Escaneado' : p.status === 'enviado' ? 'Enviado' : 'Pendiente'}</span>
+    </div>
+    <div class="card-bd">
+      <div class="row"><span class="rl">Cliente</span><span class="rv">${p.cliente}</span></div>
+      <div class="row"><span class="rl">Factura</span><span class="rv">${p.factura}</span></div>
+      <div class="row"><span class="rl">Unidad</span><span class="rv">${p.unidad}</span></div>
+      <div class="row"><span class="rl">Material</span><span class="rv">${p.material}</span></div>
+      <div class="rdest">📍 ${p.destino}</div>
+      ${p.guia ? `<span class="gtag">✓ Guía: ${p.guia}</span>` : ''}
+    </div>
+  </div>`).join('');
+}
+
+function scanForm() {
+  const pends = S.pedidos.filter(p => p.status === 'pendiente');
+  return `
+  <div class="cfgbox">
+    <h3>Pedido a escanear</h3>
+    <div class="fg"><label class="lbl">Seleccionar pedido</label>
+      <select class="inp" id="sPed">
+        <option value="">-- Elige pedido --</option>
+        ${pends.map(p => `<option value="${p.id}">${p.id} — ${p.cliente}</option>`).join('')}
+      </select>
+    </div>
+    <div class="fg"><label class="lbl">Número de guía</label>
+      <input class="inp" id="sGuia" placeholder="Ej: FX9284738211MX" style="text-transform:uppercase;letter-spacing:1px;font-weight:700" autocomplete="off" autocorrect="off" autocapitalize="characters">
+    </div>
+  </div>
+  <div class="camprev" id="camP"><video id="camV" autoplay playsinline muted></video></div>
+  <div class="cambts" id="camBts">
+    <button class="btn bd" onclick="capPhoto()">📸 Capturar foto</button>
+    <button class="btn bo" onclick="stopCam()">✕ Cancelar</button>
+  </div>
+  <div id="pArea"></div>
+  <div class="sbox" onclick="startCam()">
+    <div class="sicon">📷</div>
+    <p class="st">Tomar foto de la guía</p>
+    <p class="ss">Toca para abrir la cámara</p>
+  </div>
+  <button class="btn br" onclick="submitGuia()">✓ Registrar Guía en Sheet</button>
+  <button class="btn bo" onclick="demoScan()">⚡ Demo rápido</button>`;
+}
+
+function nuevoForm() {
+  return `
+  <div class="cfgbox">
+    <h3>Agregar nuevo pedido al Sheet</h3>
+    <div class="fg"><label class="lbl">ID Pedido *</label><input class="inp" id="nId" placeholder="PED-2026-005" autocorrect="off"></div>
+    <div class="fg"><label class="lbl">Cliente *</label><input class="inp" id="nCl" placeholder="Nombre del cliente"></div>
+    <div class="fg"><label class="lbl">Factura</label><input class="inp" id="nFa" placeholder="FAC-8845" autocorrect="off"></div>
+    <div class="fg"><label class="lbl">Unidad / Equipo</label><input class="inp" id="nUn" placeholder="Ej: Torno CNC 250"></div>
+    <div class="fg"><label class="lbl">Material</label><input class="inp" id="nMa" placeholder="Ej: Aluminio 6061"></div>
+    <div class="fg"><label class="lbl">Destino</label><input class="inp" id="nDe" placeholder="Ej: Monterrey, NL"></div>
+    <button class="btn br" onclick="submitNuevo()">+ Agregar al Sheet</button>
+  </div>`;
+}
+
+function cfgChofer() {
+  return `
+  <div class="cfgbox">
+    <h3>Mi información</h3>
+    <div class="fg"><label class="lbl">Mi nombre</label><input class="inp" id="cfgN" value="${S.chofer}" placeholder="Tu nombre"></div>
+    <button class="btn br" onclick="saveCfg()">Guardar</button>
+    <button class="btn bo" onclick="changeRole()">Cambiar rol</button>
+  </div>
+  <div class="cfgbox">
+    <h3>Notificaciones</h3>
+    <div class="ok-box">✓ Email automático a csoto@mextradeint.com al registrar cada guía</div>
+  </div>
+  <div class="cfgbox">
+    <h3>Cómo agregar al inicio del celular</h3>
+    <p style="font-size:12px;color:#707070;line-height:1.7">
+      <strong>iPhone:</strong> Safari → botón compartir → "Agregar a pantalla de inicio"<br>
+      <strong>Android:</strong> Chrome → 3 puntos → "Agregar a pantalla de inicio"
+    </p>
+  </div>`;
+}
+
+function saveCfg() {
+  const v = $('cfgN')?.value?.trim();
+  if (v) { S.chofer = v; localStorage.setItem('mxt_ch', v); }
+  toast('Guardado ✓', 'ok', 1400);
+}
+
+async function rChofer() {
+  await sync();
+  const cl = $('clist'); if (cl) cl.innerHTML = pedidoCards();
+  const si = $('csi'); if (si) si.textContent = `Sheet conectado · ${S.pedidos.length} pedidos`;
+  toast('Sincronizado ✓', 'ok', 1600);
+}
+
+function selPed(id) {
+  const p = S.pedidos.find(x => x.id === id);
+  if (!p || p.status !== 'pendiente') return;
+  sw('cS', 'tc2');
+  setTimeout(() => { const s = $('sPed'); if (s) s.value = id; }, 80);
+}
+
+/* ── Camera ── */
+async function startCam() {
+  try {
+    const st = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: { ideal: 'environment' }, width: { ideal: 1280 }, height: { ideal: 720 } }
+    });
+    S.vs = st;
+    const v = $('camV'), p = $('camP'), b = $('camBts');
+    if (v) v.srcObject = st;
+    if (p) p.style.display = 'block';
+    if (b) b.style.display = 'flex';
+  } catch (e) { toast('Cámara no disponible — ingresa la guía manualmente', 'err', 3000); }
+}
+
+function capPhoto() {
+  const v = $('camV'), c = $('capCv');
+  if (!v || !c) return;
+  c.width = v.videoWidth || 1280;
+  c.height = v.videoHeight || 720;
+  c.getContext('2d').drawImage(v, 0, 0);
+  S.photo = c.toDataURL('image/jpeg', .75);
+  stopCam();
+  const a = $('pArea');
+  if (a) a.innerHTML = `<img src="${S.photo}" class="photo-prev"><p style="font-size:11px;color:#155724;text-align:center;margin-bottom:10px;font-weight:700">✓ Foto capturada</p>`;
+  toast('Foto capturada ✓', 'ok', 1400);
+}
+
+function stopCam() {
+  if (S.vs) { S.vs.getTracks().forEach(t => t.stop()); S.vs = null; }
+  const p = $('camP'), b = $('camBts');
+  if (p) p.style.display = 'none';
+  if (b) b.style.display = 'none';
+}
+
+function demoScan() {
+  const s = $('sPed'), g = $('sGuia');
+  const pend = S.pedidos.find(p => p.status === 'pendiente');
+  if (s && pend) s.value = pend.id;
+  if (g) g.value = 'FX' + Math.floor(Math.random() * 9e9 + 1e9) + 'MX';
+  S.photo = null;
+  const a = $('pArea');
+  if (a) a.innerHTML = `<div style="background:#d4edda;border-radius:8px;padding:9px;text-align:center;font-size:12px;color:#155724;font-weight:700;margin-bottom:10px">⚡ Modo demo activo</div>`;
+  toast('Demo listo — presiona Registrar');
+}
+
+async function submitGuia() {
+  const s = $('sPed'), g = $('sGuia');
+  if (!s?.value) { toast('Selecciona un pedido', 'err'); return; }
+  if (!g?.value?.trim()) { toast('Ingresa el número de guía', 'err'); return; }
+  const pedidoId = s.value;
+  const guia = g.value.trim().toUpperCase();
+  const chofer = S.chofer || 'Chofer';
+  toast('Registrando en Google Sheet...');
+  try {
+    const r = await post({ action: 'registrarGuia', pedidoId, guia, fotoUrl: S.photo || '', chofer });
+    if (r.ok) {
+      toast('✓ Guía registrada — email enviado a csoto@mextradeint.com', 'ok', 3500);
+      await sync();
+      s.value = ''; g.value = ''; S.photo = null;
+      const a = $('pArea'); if (a) a.innerHTML = '';
+      sw('cP', 'tc1');
+      const cl = $('clist'); if (cl) cl.innerHTML = pedidoCards();
+    } else {
+      toast('Error: ' + (r.error || 'desconocido'), 'err', 4000);
+    }
+  } catch (e) { toast('Error de conexión — verifica internet', 'err', 3500); }
+}
+
+async function submitNuevo() {
+  const id = $('nId')?.value?.trim(), cl = $('nCl')?.value?.trim();
+  if (!id || !cl) { toast('ID y Cliente son requeridos', 'err'); return; }
+  toast('Agregando al Sheet...');
+  try {
+    const r = await post({
+      action: 'agregarPedido',
+      pedido: {
+        id, cliente: cl,
+        factura: $('nFa')?.value || '',
+        unidad: $('nUn')?.value || '',
+        material: $('nMa')?.value || '',
+        destino: $('nDe')?.value || '',
+        status: 'pendiente'
+      }
+    });
+    if (r.ok) {
+      toast('✓ Pedido agregado al Sheet', 'ok', 2200);
+      ['nId','nCl','nFa','nUn','nMa','nDe'].forEach(x => { const e = $(x); if (e) e.value = ''; });
+      await sync();
+      const cl2 = $('clist'); if (cl2) cl2.innerHTML = pedidoCards();
+    } else {
+      toast('Error: ' + (r.error || 'desconocido'), 'err');
+    }
+  } catch (e) { toast('Error de conexión', 'err'); }
+}
+
+/* ── Vendedor Screen ── */
+function vendedorScreen() {
+  const nc = S.notifs.filter(n => n._new).length;
+  $('main').innerHTML = `
+  <div class="tabs">
+    <div class="tab active" id="tv1" onclick="sw('vN','tv1')">Guías${nc ? `<span class="nbadge">${nc}</span>` : ''}</div>
+    <div class="tab" id="tv2" onclick="sw('vP','tv2')">Todos</div>
+    <div class="tab" id="tv3" onclick="sw('vC','tv3')">⚙</div>
+  </div>
+  <div class="content">
+    <div class="sec active" id="vN">
+      <div class="syncbar">
+        <span class="sinfo" id="vsi">Auto-refresh cada 15s</span>
+        <button class="sbtn" onclick="rVend()">🔄 Sync</button>
+      </div>
+      <div id="nlist">${notifCards()}</div>
+    </div>
+    <div class="sec" id="vP">
+      <div class="syncbar">
+        <span class="sinfo">Total: ${S.pedidos.length} pedidos</span>
+        <button class="sbtn" onclick="rVend()">🔄 Sync</button>
+      </div>
+      <div>${pedidoCards()}</div>
+    </div>
+    <div class="sec" id="vC">
+      <div class="cfgbox">
+        <h3>Notificaciones</h3>
+        <div class="ok-box">✓ Recibiendo emails en csoto@mextradeint.com</div>
+        <p style="font-size:12px;color:#707070;margin-bottom:12px">Esta pantalla se actualiza automáticamente cada 15 segundos.</p>
+        <button class="btn bo" onclick="changeRole()">Cambiar rol</button>
+      </div>
+      <div class="cfgbox">
+        <h3>Cómo agregar al inicio del celular</h3>
+        <p style="font-size:12px;color:#707070;line-height:1.7">
+          <strong>iPhone:</strong> Safari → botón compartir → "Agregar a pantalla de inicio"<br>
+          <strong>Android:</strong> Chrome → 3 puntos → "Agregar a pantalla de inicio"
+        </p>
+      </div>
+    </div>
+  </div>`;
+}
+
+function notifCards() {
+  if (!S.notifs.length) return `<div class="empty"><div class="ei">🔔</div><p class="et">Sin guías aún</p><p class="es">Cuando un chofer registre una guía aparecerá aquí al instante y recibirás un email en csoto@mextradeint.com</p></div>`;
+  return S.notifs.map(n => `
+  <div class="ncrd ${n._new ? 'nw' : ''}">
+    <div class="nhd">
+      <span class="nid">📦 ${n.id}</span>
+      <span class="nts">${n.ts || 'Ahora'}</span>
+    </div>
+    <div class="nbd">
+      <div class="ngrid">
+        <div class="ni"><div class="nl">Cliente</div><div class="nv">${n.cliente}</div></div>
+        <div class="ni"><div class="nl">Factura</div><div class="nv">${n.factura}</div></div>
+        <div class="ni"><div class="nl">Unidad</div><div class="nv">${n.unidad}</div></div>
+        <div class="ni"><div class="nl">Destino</div><div class="nv" style="color:var(--red)">${n.destino}</div></div>
+      </div>
+      <div class="gbox">
+        <span style="font-size:18px">📋</span>
+        <span class="gnum">${n.guia}</span>
+        ${n.foto && n.foto.startsWith('data:') ? `<img src="${n.foto}" style="width:54px;height:40px;border-radius:6px;border:2px solid var(--red);object-fit:cover">` : '<span style="font-size:20px">📷</span>'}
+      </div>
+      <button class="btn br" style="padding:11px;margin:0" onclick="copyG('${n.guia}')">📋 Copiar guía para cliente</button>
+    </div>
+  </div>`).join('');
+}
+
+async function rVend() {
+  await sync();
+  const nl = $('nlist'); if (nl) nl.innerHTML = notifCards();
+  const si = $('vsi'); if (si) si.textContent = 'Actualizado: ' + new Date().toLocaleTimeString('es-MX', { hour12: false });
+  toast('Sincronizado ✓', 'ok', 1500);
+}
+
+function copyG(g) {
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(g).then(() => toast('Guía copiada: ' + g, 'ok')).catch(() => toast('Guía: ' + g));
+  } else { toast('Guía: ' + g); }
+}
+
+function sw(sId, bId) {
+  document.querySelectorAll('.sec').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  const s = $(sId), b = $(bId);
+  if (s) s.classList.add('active');
+  if (b) b.classList.add('active');
+}
+
+function changeRole() {
+  if (S.timer) { clearInterval(S.timer); S.timer = null; }
+  stopCam();
+  S.role = null; S.notifs = [];
+  roleScreen();
+}
+
+/* ── Init ── */
+roleScreen();
+</script>
+</body>
+</html>
